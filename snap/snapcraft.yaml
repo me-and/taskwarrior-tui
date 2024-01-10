@@ -8,16 +8,29 @@ description: |
 grade: stable
 confinement: strict
 
+plugs:
+  dot-config:
+    interface: personal-files
+    read:
+      - $HOME/.config/task
+
+  dot-task:
+    interface: personal-files
+    write:
+      - $HOME/.local/share/task
+
 apps:
   task:
     command: usr/local/bin/task
     environment:
       PATH: $SNAP/usr/bin:$SNAP/usr/local/bin/:$PATH:$SNAP/bin/:$PATH
+    plugs: [dot-config, dot-task]
 
   taskwarrior-tui:
     command: bin/taskwarrior-tui
     environment:
       PATH: $SNAP/usr/bin:$SNAP/usr/local/bin/:$PATH:$SNAP/bin/:$PATH
+    plugs: [dot-config, dot-task]
 
 parts:
   task:
